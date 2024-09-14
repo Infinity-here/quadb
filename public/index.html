@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hodlinfo Clone</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Hodlinfo</h1>
+        <p>Top 10 Cryptocurrencies</p>
+    </header>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Last</th>
+                <th>Buy</th>
+                <th>Sell</th>
+                <th>Volume</th>
+                <th>Base Unit</th>
+            </tr>
+        </thead>
+        <tbody id="ticker-table"></tbody>
+    </table>
+
+    <script>
+        async function fetchData() {
+            const response = await fetch('/api/tickers');
+            const data = await response.json();
+            const table = document.getElementById('ticker-table');
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.last}</td>
+                    <td>${item.buy}</td>
+                    <td>${item.sell}</td>
+                    <td>${item.volume}</td>
+                    <td>${item.base_unit}</td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
